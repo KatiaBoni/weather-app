@@ -1,22 +1,58 @@
-<<<<<<< HEAD
-# Salesforce DX Project: Next Steps
+# Weather APP - Salesforce LWC + Apex
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+## Descrizione del progetto
+Questa è una semplice app meteo sviluppata in Salesforce usando **Lightning Web Components (LWC)** per il frontend e **Apex** per il backend.
 
-## How Do You Plan to Deploy Your Changes?
+L’app permette di:
+- cercare una città e visualizzare il meteo attuale
+- ricevere suggerimenti automatici dopo aver digitato almeno 3 lettere
+- usare la posizione attuale del dispositivo per ottenere il meteo locale
+- visualizzare temperatura, vento, precipitazioni e umidità
+- vedere le previsioni dei prossimi 3 giorni
+- mostrare emoji e una descrizione testuale delle condizioni meteo
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+Le informazioni meteo vengono recuperate tramite le API di **Open-Meteo**, mentre per ricavare la città dalla posizione attuale viene usato un servizio di **reverse geocoding**.
 
-## Configure Your Salesforce DX Project
+---
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+## Funzionalità principali
+- Ricerca meteo per nome città
+- Autocomplete delle città
+- Meteo basato sulla posizione attuale
+- Temperatura attuale
+- Velocità del vento
+- Precipitazioni
+- Umidità
+- Descrizione meteo con emoji
+- Forecast di 3 giorni
+- Gestione degli errori per città non trovate o problemi API
 
-## Read All About It
+---
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
-=======
-# weather-app
->>>>>>> 751e950ee788af0361c9dd3f3df5118d44a4c77d
+## Tecnologie utilizzate
+- Salesforce
+- Lightning Web Components (LWC)
+- Apex
+- Open-Meteo API
+- BigDataCloud Reverse Geocoding API
+- Visual Studio Code
+- Salesforce CLI / SFDX
+
+---
+
+## Struttura del progetto
+```text
+force-app/main/default/
+├── classes/
+│   ├── WeatherController.cls
+│   ├── WeatherService.cls
+│   ├── WeatherResult.cls
+│   ├── ForecastDay.cls
+│   └── CitySuggestion.cls
+│
+└── lwc/
+    └── weatherApp/
+        ├── weatherApp.html
+        ├── weatherApp.js
+        ├── weatherApp.css
+        └── weatherApp.js-meta.xml
