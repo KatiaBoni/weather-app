@@ -1,0 +1,143 @@
+<!--
+  @description       : 
+  @author            : KBoni
+  @group             : 
+  @last modified on  : 03-25-2026
+  @last modified by  : KBoni
+-->
+<template>
+    <lightning-card title="Weather APP" icon-name="utility:world">
+        <div class="wrapper">
+            <div class="hero">
+                <h2 class="hero-title">Controlla il meteo in tempo reale</h2>
+                <p class="hero-subtitle">
+                    Inserisci una città oppure usa la tua posizione attuale per vedere meteo e previsioni.
+                </p>
+            </div>
+
+            <div class="search-panel">
+                <lightning-input
+                    label="Nome città"
+                    value={city}
+                    onchange={handleCityChange}
+                    placeholder="Es. Roma, Milano, New York">
+                </lightning-input>
+
+                <template if:true={showSuggestions}>
+                    <div class="suggestions-box">
+                        <template for:each={citySuggestions} for:item="suggestion">
+                            <div
+                                key={suggestion.label}
+                                class="suggestion-item"
+                                data-city={suggestion.name}
+                                onclick={handleSuggestionClick}>
+                                📍 {suggestion.label}
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <div class="button-row">
+                    <lightning-button
+                        label="Cerca"
+                        variant="brand"
+                        onclick={handleSearch}>
+                    </lightning-button>
+
+                    <lightning-button
+                        label="Usa la mia posizione"
+                        variant="neutral"
+                        onclick={handleUseCurrentLocation}
+                        class="location-btn">
+                    </lightning-button>
+                </div>
+
+                <template if:true={lastSearchedCity}>
+                    <p class="last-search">Ultima ricerca: <strong>{lastSearchedCity}</strong></p>
+                </template>
+            </div>
+
+            <template if:true={isLoading}>
+                <div class="message info-box">
+                    <lightning-spinner alternative-text="Caricamento" size="small"></lightning-spinner>
+                    <p class="message-text">Recupero dati meteo in corso...</p>
+                </div>
+            </template>
+
+            <template if:true={error}>
+                <div class="message error-box">
+                    <p class="message-title">Errore</p>
+                    <p class="message-text">{error}</p>
+                </div>
+            </template>
+
+            <template if:true={hasWeather}>
+                <div class={weatherCardClass}>
+                    <div class="weather-top">
+                        <div class="weather-main">
+                            <div class="emoji">{weather.weatherEmoji}</div>
+                            <div>
+                                <p class="city-name">{weather.cityName}</p>
+                                <p class="country-name">{weather.country}</p>
+                                <p class="weather-description">{weather.weatherDescription}</p>
+                            </div>
+                        </div>
+
+                        <div class="temp-block">
+                            <p class="temp-value">{weather.temperature}</p>
+                            <p class="temp-unit">{weather.temperatureUnit}</p>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">🌧️</span>
+                            <span class="detail-label">Precipitazioni</span>
+                            <span class="detail-value">
+                                {weather.precipitation} {weather.precipitationUnit}
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-icon">💨</span>
+                            <span class="detail-label">Vento</span>
+                            <span class="detail-value">
+                                {weather.windSpeed} {weather.windSpeedUnit}
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-icon">💧</span>
+                            <span class="detail-label">Umidità</span>
+                            <span class="detail-value">
+                                {weather.humidity} {weather.humidityUnit}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <template if:true={hasForecast}>
+                    <div class="forecast-section">
+                        <h3 class="forecast-title">Previsioni 3 giorni</h3>
+
+                        <div class="forecast-grid">
+                            <template for:each={forecastDays} for:item="day">
+                                <div key={day.data} class="forecast-card">
+                                    <p class="forecast-date">{day.formattedData}</p>
+                                    <div class="forecast-emoji">{day.weatherEmoji}</div>
+                                    <p class="forecast-description">{day.weatherDescription}</p>
+                                    <div class="forecast-temp">
+                                        <span class="max-temp">Max {day.tempMax}°</span>
+                                        <span class="min-temp">Min {day.tempMin}°</span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>
